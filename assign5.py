@@ -62,14 +62,14 @@ def getDFs(qrelFile, qrelFields, resFile, resFields):
     """
     # Qrels have 4 fields: <Qid, unused historic field, doc-id, rel-info>
     obj = FileReader(qrelFile, qrelFields)
-    qrels = obj.buildarray(4)
+    qrels = obj.buildarray()
     qrelsDF = pd.DataFrame.from_records(qrels, columns=['qid', 'hist', 'did', 'rel'])
     qrelsDF[['rel']] = qrelsDF[['rel']].apply(pd.to_numeric)
     qids = qrelsDF.qid.unique()
 
     # 6 fields <Qid, unused historic field, doc-id, rank, score, model-name>
     obj = FileReader(resFile, resFields)
-    results = obj.buildarray(6)
+    results = obj.buildarray()
     resultsDF = pd.DataFrame.from_records(results, columns=['qid', 'hist', 'did', 'rank', 'score', 'model'])
     resultsDF[['rank']] = resultsDF[['rank']].apply(pd.to_numeric)
     return qrelsDF, resultsDF, qids
